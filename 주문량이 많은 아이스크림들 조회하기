@@ -1,0 +1,16 @@
+SELECT FLAVOR
+ FROM (
+        SELECT FLAVOR
+          FROM (
+                SELECT FLAVOR, SUM(TOTAL_ORDER) TOTAL
+                  FROM JULY
+                  GROUP BY FLAVOR
+                  UNION ALL
+                 SELECT FLAVOR, SUM(TOTAL_ORDER) TOTAL
+                   FROM FIRST_HALF 
+                  GROUP BY FLAVOR
+                )
+        GROUP BY FLAVOR
+        ORDER BY SUM(TOTAL) DESC
+      )
+WHERE ROWNUM < 4
